@@ -20,7 +20,6 @@ mfsa_cache = {}
 
 def determine_severity(cve):
     cve_number = cve["CVE_data_meta"]["ID"]
-    # cve_number_unicode = cve_number.replace('-', '-')
     mfsa = [
         data["url"]
         for data in cve["references"]["reference_data"]
