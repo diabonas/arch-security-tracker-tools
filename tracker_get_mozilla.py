@@ -31,9 +31,9 @@ def determine_severity(cve):
         mfsa_cache[mfsa] = etree.fromstring(mfsa_cache[mfsa], etree.HTMLParser())
 
     severity = mfsa_cache[mfsa].xpath(
-        f'//*[@id="{cve_number}"]/following-sibling::dl[@class="summary"]/dt[text()="Impact"]/following-sibling::dd/span/text()'
+        f'string(//*[@id="{cve_number}"]/following-sibling::dl[@class="summary"]/dt[text()="Impact"]/following-sibling::dd/span/text())'
     )
-    return SEVERITIES[severity[0]] if len(severity) > 0 else "Unknown"
+    return SEVERITIES[severity] if len(severity) > 0 else "Unknown"
 
 
 cves_all = json.loads(requests.get(api_endpoint).content)

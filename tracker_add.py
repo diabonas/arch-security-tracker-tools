@@ -24,7 +24,7 @@ session = requests.session()
 
 csrf_token = session.get(f"{TRACKER_URL}/login").content
 csrf_token = etree.fromstring(csrf_token, etree.HTMLParser())
-csrf_token = csrf_token.xpath('//input[@id="csrf_token"]/@value')[0]
+csrf_token = csrf_token.xpath('string(//input[@id="csrf_token"]/@value)')
 
 # This can happen in my test setup, I haven't observed it in production yet,
 # might be a Flask bug
@@ -38,7 +38,7 @@ response = session.post(
 )
 if not response.ok:
     error = etree.fromstring(response.content, etree.HTMLParser())
-    error = error.xpath('//div[@class="errors"]/ul/li/text()')[0]
+    error = error.xpath('string(//div[@class="errors"]/ul/li/text())')
     print(f"Login failure: {error}")
     sys.exit()
 
@@ -59,7 +59,7 @@ for cve in cves:
     response = session.post(f"{TRACKER_URL}/cve/add", data=data, allow_redirects=False)
     if response.status_code != 302:
         warning = etree.fromstring(response.content, etree.HTMLParser())
-        warning = warning.xpath('//div[@class="box warning"]/text()')[0]
+        warning = warning.xpath('string(//div[@class="box warning"]/text())')
         print(f"Failed to add {cve['name']}: {warning}")
     elif "/login" in response.headers["Location"]:
         print(f"Failed to add {cve['name']} due to an authentication failure")
