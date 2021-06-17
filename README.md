@@ -7,9 +7,10 @@ Security Tracker](https://github.com/archlinux/arch-security-tracker) easier.
 
 * CVE entry parsing from multiple sources (currently
   [NVD](https://nvd.nist.gov/),
-  [Mozilla](https://www.mozilla.org/en-US/security/advisories/) and
-  [Chromium](https://chromereleases.googleblog.com/)) into a JSON format
-  consumable by the tracker
+  [Mozilla](https://www.mozilla.org/en-US/security/advisories/),
+  [Chromium](https://chromereleases.googleblog.com/) and
+  [GitLab](https://gitlab.com/gitlab-org/cves)) into a JSON format consumable
+  by the tracker
 * Automatic batch addition of the parsed CVE entries to the tracker
 
 ## Dependencies
@@ -81,6 +82,22 @@ post and the link to the corresponding Chromium bug report as specified in the
 blog post are used as references. The attack vector is assumed to be "Remote"
 by default as Chromium is a browser. The type of the vulnerability is always
 set to "Unknown" and needs to be filled by hand by the user.
+
+### GitLab
+
+[`tracker_get_gitlab.py`](tracker_get_gitlab.py) parses CVE entries assigned by
+the [GitLab CNA](https://gitlab.com/gitlab-org/cves), for the GitLab products
+as well as some projects hosted on GitLab. These CVEs are usually added to the
+NVD database quite quickly as well, but the GitLab entries have more detailed
+information regarding the CVSS score quicker. The parser is used as
+
+```sh
+./tracker_get_gitlab.py CVE...
+```
+
+Description and references are taken verbatim from the NVD CVE entry. Severity
+and attack vector are derived from the CVSS v3. The type of the vulnerability
+is always set to "Unknown" and needs to be filled by hand by the user.
 
 ## CVE upload to the security tracker
 
