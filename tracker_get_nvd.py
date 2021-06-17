@@ -6,17 +6,6 @@ import requests
 import sys
 
 
-def calculate_severity(baseScore):
-    if baseScore < 4.0:
-        return "Low"
-    elif baseScore < 7.0:
-        return "Medium"
-    elif baseScore < 9.0:
-        return "High"
-    else:
-        return "Critical"
-
-
 VECTORS = {"NETWORK": "Remote", "LOCAL": "Local"}
 
 cves = []
@@ -31,9 +20,7 @@ for cve_number in sys.argv[1:]:
     cve = {
         "name": cve["cve"]["CVE_data_meta"]["ID"],
         "type": "Unknown",  # TODO: parse cve['cve']['problemtype'] (contains CWE) to determine type? seems hard...
-        "severity": calculate_severity(
-            cve["impact"]["baseMetricV3"]["cvssV3"]["baseScore"]
-        )
+        "severity": cve["impact"]["baseMetricV3"]["cvssV3"]["baseSeverity"].capitalize()
         if "baseMetricV3" in cve["impact"]
         else "Unknown",
         "vector": VECTORS[cve["impact"]["baseMetricV3"]["cvssV3"]["attackVector"]]
