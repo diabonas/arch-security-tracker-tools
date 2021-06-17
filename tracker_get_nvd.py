@@ -15,6 +15,7 @@ for cve_number in sys.argv[1:]:
     cve = json.loads(requests.get(api_endpoint).content)
     if "result" not in cve:
         print(f"{cve_number} not found!", file=sys.stderr)
+        continue
 
     cve = cve["result"]["CVE_Items"][0]
     cve = {
