@@ -75,13 +75,14 @@ where `URL` is the URL of a Chrome release blog post, e.g.
 <https://chromereleases.googleblog.com/2021/05/stable-channel-update-for-desktop.html>.
 
 The description is of the form "A `type` security issue has been found in the
-`component` component of the Chromium browser before version `new_version`.",
-where `type`, `component` and `new_version` are parsed from the blog post. The
-corresponding severity is taken from the blog post as well. The URL of the blog
-post and the link to the corresponding Chromium bug report as specified in the
-blog post are used as references. The attack vector is assumed to be "Remote"
-by default as Chromium is a browser. The type of the vulnerability is always
-set to "Unknown" and needs to be filled by hand by the user.
+`component` component of the Chromium browser engine before version
+`new_version`.", where `type`, `component` and `new_version` are parsed from
+the blog post. The corresponding severity is taken from the blog post as well.
+The URL of the blog post and the link to the corresponding Chromium bug report
+as specified in the blog post are used as references. The attack vector is
+assumed to be "Remote" by default as Chromium is a browser. The type of the
+vulnerability is always set to "Unknown" and needs to be filled by hand by the
+user.
 
 ### GitLab
 
