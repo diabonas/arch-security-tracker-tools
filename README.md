@@ -17,6 +17,7 @@ Security Tracker](https://github.com/archlinux/arch-security-tracker) easier.
 
 * python >= 3.6
 * python-lxml
+* python-requests
 
 ## CVE entry parsing
 
