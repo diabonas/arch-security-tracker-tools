@@ -30,14 +30,14 @@ for url in sys.argv[1:]:
             "name": cve,
             "type": "Unknown",
             "severity": advisory.xpath(
-                f'normalize-space(//span[starts-with(text(), "{cve}")]/preceding::span[1]/text())'
+                f'normalize-space(//span[starts-with(text(), "{cve}")]/preceding-sibling::span[1]/text())'
             ),
             "vector": "Remote",
             "description": f"A {type.lower()} security issue has been found in the {component} component of the Chromium browser engine before version {new_version}.",
             "references": [
                 url,
                 advisory.xpath(
-                    f'string(//span[starts-with(text(), "{cve}")]/preceding::a[1]/@href)'
+                    f'string(//span[starts-with(text(), "{cve}")]/preceding-sibling::a[1]/@href)'
                 ),
             ],
             "notes": None,
