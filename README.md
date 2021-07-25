@@ -8,9 +8,10 @@ Security Tracker](https://github.com/archlinux/arch-security-tracker) easier.
 * CVE entry parsing from multiple sources (currently
   [NVD](https://nvd.nist.gov/),
   [Mozilla](https://www.mozilla.org/en-US/security/advisories/),
-  [Chromium](https://chromereleases.googleblog.com/) and
-  [GitLab](https://gitlab.com/gitlab-org/cves)) into a JSON format consumable
-  by the tracker
+  [Chromium](https://chromereleases.googleblog.com/),
+  [GitLab](https://gitlab.com/gitlab-org/cves) and
+  [WebKitGTK](https://webkitgtk.org/security.html)) into a JSON format
+  consumable by the tracker
 * Automatic batch addition of the parsed CVE entries to the tracker
 
 ## Dependencies
@@ -100,6 +101,25 @@ information regarding the CVSS score quicker. The parser is used as
 Description and references are taken verbatim from the NVD CVE entry. Severity
 and attack vector are derived from the CVSS v3. The type of the vulnerability
 is always set to "Unknown" and needs to be filled by hand by the user.
+
+### WebKitGTK
+
+[`tracker_get_webkitgtk.py`](tracker_get_webkitgtk.py) parses CVEs issued for
+[WebKitGTK](https://webkitgtk.org/security.html). It is used as
+
+```sh
+./tracker_get_webkitgtk.py URL...
+```
+
+where `URL` is the URL of a WebKitGTK advisory, e.g.
+<https://webkitgtk.org/security/WSA-2021-0004.html>.
+
+The description is of the form "A security issue has been found in `version`.
+`impact`", where `version` and `impact` are parsed from the advisory. The URL
+of the advisory is used as a reference. The attack vector is assumed to be
+"Remote" by default as WebKitGTK is a browser engine. The type and severity of
+the vulnerability are always set to "Unknown" and need to be filled in by hand
+by the user.
 
 ## CVE upload to the security tracker
 
