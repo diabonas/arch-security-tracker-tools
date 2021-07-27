@@ -6,12 +6,9 @@ Security Tracker](https://github.com/archlinux/arch-security-tracker) easier.
 ## Features
 
 * CVE entry parsing from multiple sources (currently
-  [NVD](https://nvd.nist.gov/),
-  [Mozilla](https://www.mozilla.org/en-US/security/advisories/),
-  [Chromium](https://chromereleases.googleblog.com/),
-  [GitLab](https://gitlab.com/gitlab-org/cves) and
-  [WebKitGTK](https://webkitgtk.org/security.html)) into a JSON format
-  consumable by the tracker
+  [Chromium](#chromium), [GitLab](#gitlab), [Mozilla](#mozilla),
+  [NVD](#national-vulnerability-database-nvd) and [WebKitGTK](#webkitgtk)) into
+  a JSON format consumable by the tracker
 * Automatic batch addition of the parsed CVE entries to the tracker
 
 ## Dependencies
@@ -26,43 +23,6 @@ CVEs from multiple sources can be parsed. All parser scripts take the CVEs to
 be considered as a list of arguments and write the parsed CVE entries to stdout
 in JSON form. The JSON format follows the one used by the tracker as part of
 its API endpoints, e.g. <https://security.archlinux.org/CVE-2019-9956.json>.
-
-### NVD
-
-[`tracker_get_nvd.py`](tracker_get_nvd.py) parses CVE entries from the official [NVD
-database](https://nvd.nist.gov/). It is used as
-
-```sh
-./tracker_get_nvd.py CVE...
-```
-
-Description and references are taken verbatim from the NVD CVE entry. Severity
-and attack vector are derived from the CVSS v3 if present (this usually takes a
-few day after the CVE has been published). The type of the vulnerability is
-always set to "Unknown" and needs to be filled by hand by the user.
-
-This is mostly included as an example for working with the JSON format. CVEs
-obtained from this source often require manual changes to the description and
-references before they can be used for the tracker.
-
-### Mozilla
-
-[`tracker_get_mozilla.py`](tracker_get_mozilla.py) parses CVEs issued by
-[Mozilla](https://www.mozilla.org/en-US/security/advisories/), mostly for
-Firefox and Thunderbird. It is used as
-
-```sh
-./tracker_get_nvd.py CVE... MFSA...
-```
-
-where `MFSA` is an advisory number issued by Mozilla, e.g.
-[`mfsa2021-01`](https://www.mozilla.org/en-US/security/advisories/mfsa2021-01/).
-If a MFSA is specified, all CVEs included in this advisory will be parsed.
-
-Description, references and severity are taken verbatim from the Mozilla
-advisory. The attack vector is assumed to be "Remote" by default due to the
-nature of the Mozilla products. The type of the vulnerability is always set to
-"Unknown" and needs to be filled by hand by the user.
 
 ### Chromium
 
@@ -83,8 +43,8 @@ the blog post. The corresponding severity is taken from the blog post as well.
 The URL of the blog post and the link to the corresponding Chromium bug report
 as specified in the blog post are used as references. The attack vector is
 assumed to be "Remote" by default as Chromium is a browser. The type of the
-vulnerability is always set to "Unknown" and needs to be filled by hand by the
-user.
+vulnerability is always set to "Unknown" and needs to be filled in by hand by
+the user.
 
 ### GitLab
 
@@ -101,6 +61,44 @@ information regarding the CVSS score quicker. The parser is used as
 Description and references are taken verbatim from the NVD CVE entry. Severity
 and attack vector are derived from the CVSS v3. The type of the vulnerability
 is always set to "Unknown" and needs to be filled by hand by the user.
+
+### Mozilla
+
+[`tracker_get_mozilla.py`](tracker_get_mozilla.py) parses CVEs issued by
+[Mozilla](https://www.mozilla.org/en-US/security/advisories/), mostly for
+Firefox and Thunderbird. It is used as
+
+```sh
+./tracker_get_nvd.py CVE... MFSA...
+```
+
+where `MFSA` is an advisory number issued by Mozilla, e.g.
+[`mfsa2021-01`](https://www.mozilla.org/en-US/security/advisories/mfsa2021-01/).
+If a MFSA is specified, all CVEs included in this advisory will be parsed.
+
+Description, references and severity are taken verbatim from the Mozilla
+advisory. The attack vector is assumed to be "Remote" by default due to the
+nature of the Mozilla products. The type of the vulnerability is always set to
+"Unknown" and needs to be filled by hand by the user.
+
+### National Vulnerability Database (NVD)
+
+[`tracker_get_nvd.py`](tracker_get_nvd.py) parses CVE entries from the official
+[National Vulnerability Database](https://nvd.nist.gov/). It is used
+as
+
+```sh
+./tracker_get_nvd.py CVE...
+```
+
+Description and references are taken verbatim from the NVD CVE entry. Severity
+and attack vector are derived from the CVSS v3 if present (this usually takes a
+few day after the CVE has been published). The type of the vulnerability is
+always set to "Unknown" and needs to be filled by hand by the user.
+
+This is mostly included as an example for working with the JSON format. CVEs
+obtained from this source often require manual changes to the description and
+references before they can be used for the tracker.
 
 ### WebKitGTK
 
@@ -127,8 +125,8 @@ by the user.
 Tracker. It reads a JSON file generated by one of the parsers from stdin and
 tries to create a new CVE for each of the items found in there. The necessary
 login credentials can be supplied using the `TRACKER_USERNAME` and
-`TRACKER_PASSWORD` environment variables, or will otherwise be asked queried on
-the TTY. 
+`TRACKER_PASSWORD` environment variables, or will otherwise be queried on the
+TTY.
 
 Note that only adding new CVEs is supported at the moment. Trying to add an
 already existing CVE will try to merge the data according to the upstream
