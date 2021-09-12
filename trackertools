@@ -3,7 +3,7 @@
 
 import click
 from extractors import extract
-from cli import add
+from cli import add, strip_markdown
 
 
 @click.group()
@@ -13,6 +13,7 @@ def cli():
 
 cli.add_command(extract)
 cli.add_command(add)
+cli.add_command(strip_markdown)
 
 if __name__ == "__main__":
     cli()

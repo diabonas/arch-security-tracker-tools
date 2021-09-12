@@ -156,6 +156,16 @@ Missing or incorrect information can be edited afterwards using the web
 interface of the tracker. Be careful, mass-editing messed up CVE entries has
 not been implemented yet...
 
+## Utilities
+
+```sh
+./trackertools strip-markdown INPUT
+```
+takes a JSON list of CVEs and strips all markdown formatting from it, which can
+be useful if the upstream advisory makes use of it because the Arch Linux
+security tracker does not. The stripped version is written to stdout by
+default, but can be redirected to a file using the `--output` option.
+
 ## TODO
 
 * Implement more extractors
