@@ -15,7 +15,7 @@ from markdown import markdown
     help="Output file for stripped JSON list of CVEs (defaults to stdout)",
 )
 def strip_markdown(input, output):
-    """ Strip all markdown formatting from a JSON list of CVEs """
+    """Strip all markdown formatting from a JSON list of CVEs"""
     cves = json.loads("\n".join(input.readlines()))
 
     for cve in cves:

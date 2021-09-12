@@ -5,7 +5,6 @@ import getpass
 import json
 import os
 import requests
-import sys
 from getpass import getpass
 from lxml import etree
 
@@ -43,7 +42,7 @@ def add(username, password, tracker_url, input):
     # might be a Flask bug
     if "session" not in session.cookies:
         click.echo("Missing session cookie, cannot login", err=True)
-        sys.exit()
+        return
 
     response = session.post(
         f"{tracker_url}/login",
@@ -53,7 +52,7 @@ def add(username, password, tracker_url, input):
         error = etree.fromstring(response.content, etree.HTMLParser())
         error = error.xpath('string(//div[@class="errors"]/ul/li/text())')
         click.echo(f"Login failure: {error}", err=True)
-        sys.exit()
+        return
 
     cves = json.loads("\n".join(input.readlines()))
 
