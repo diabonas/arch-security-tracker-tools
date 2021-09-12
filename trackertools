@@ -1,0 +1,18 @@
+#!/usr/bin/python
+# SPDX-License-Identifier: MIT
+
+import click
+from extractors import extract
+from cli import add
+
+
+@click.group()
+def cli():
+    pass
+
+
+cli.add_command(extract)
+cli.add_command(add)
+
+if __name__ == "__main__":
+    cli()
