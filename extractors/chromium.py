@@ -38,7 +38,7 @@ def chromium(url, output):
         ]
         cves += [
             {
-                "name": cve,
+                "name": cve.strip(),
                 "type": "Unknown",
                 "severity": advisory.xpath(
                     f'normalize-space(//span[starts-with(text(), "{cve}")]/preceding-sibling::span[1]/text())'
