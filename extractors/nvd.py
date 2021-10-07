@@ -4,7 +4,12 @@ import click
 import json
 import requests
 
-VECTORS = {"NETWORK": "Remote", "LOCAL": "Local"}
+VECTORS = {
+    "NETWORK": "Remote",
+    "ADJACENT_NETWORK": "Remote",
+    "LOCAL": "Local",
+    "PHYSICAL": "Local",
+}
 
 
 @click.command()
