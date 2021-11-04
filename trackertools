@@ -2,8 +2,9 @@
 # SPDX-License-Identifier: MIT
 
 import click
-from extractors import extract
+
 from cli import add, strip_markdown
+from extractors import extract
 
 
 @click.group()

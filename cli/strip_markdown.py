@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: MIT
 
-import click
 import json
+
+import click
 from lxml import etree
 from markdown import markdown
 

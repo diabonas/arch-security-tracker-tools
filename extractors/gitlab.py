@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: MIT
 
-import click
 import json
 import re
-import requests
 
+import click
+import requests
 
 VECTORS = {
     "NETWORK": "Remote",
